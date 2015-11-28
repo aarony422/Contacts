@@ -10,18 +10,22 @@ import java.util.HashMap;
 public class Contact implements Serializable{
     public String name;
     public String company;
-    //public String detailsURL;
-    //public String smallImageURL;
-    //public String birthdate;
-    //public HashMap<String, String> phonenums;
+    public String detailsURL;
+    public String smallImageURL;
+    public String birthdate;
+    public String Wphone;
+    public String Hphone;
+    public String Mphone;
 
-    public Contact(String name, String company) { //String detailsURL String smallImageURL, String birthdate, HashMap<String, String> phonenums) {
+    public Contact(String name, String company, String detailsURL, String smallImageURL, String birthdate, String Wphone, String Hphone, String Mphone) {
         this.name = name;
         this.company = company;
-        //this.detailsURL = detailsURL;
-        //this.smallImageURL = smallImageURL;
-        //this.birthdate = birthdate;
-        //this.phonenums = phonenums;
+        this.detailsURL = detailsURL;
+        this.smallImageURL = smallImageURL;
+        this.birthdate = birthdate;
+        this.Wphone = (Wphone != "") ? Wphone : "";
+        this.Hphone = (Hphone != "") ? Hphone : "";
+        this.Mphone = (Mphone != "") ? Mphone : "";
     }
 
     public String getName() {

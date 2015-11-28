@@ -27,10 +27,11 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         }
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.list_item_name_textview);
-        TextView tvComp = (TextView) convertView.findViewById(R.id.list_item_company_textview);
+        TextView tvWphone = (TextView) convertView.findViewById(R.id.list_item_Wphone_textview);
+
         // Populate the data into the template view using the data object
         tvName.setText(contact.name);
-        tvComp.setText(contact.company);
+        tvWphone.setText(contact.Wphone);
         // Return the completed view to render on screen
         return convertView;
     }

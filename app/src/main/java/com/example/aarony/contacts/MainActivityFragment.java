@@ -97,20 +97,21 @@ public class MainActivityFragment extends Fragment {
                 JSONObject contact = contacts.getJSONObject(i);
                 String name = contact.getString("name");
                 String company = contact.getString("company");
-                //String detailsURL = contact.getString("detailsURL");
-                //String smallImageURL = contact.getString("smallImageURL");
-                //String birthdate = contact.getString("birthdate");
+                String detailsURL = contact.getString("detailsURL");
+                String smallImageURL = contact.getString("smallImageURL");
+                String birthdate = contact.getString("birthdate");
 
                 // get phone JSON object
-                //JSONArray phones = contact.getJSONArray("phone");
-                //Log.v(LOG_TAG, phones.toString());
+                JSONObject phones = contact.getJSONObject("phone");
+                String Wphone = (phones.has("work")) ? phones.getString("work") : "";
+                String Hphone = (phones.has("home")) ? phones.getString("home") : "";
+                String Mphone = (phones.has("mobile")) ? phones.getString("mobile") : "";
 
-                rtncontact[i] = new Contact(name,company);
+                rtncontact[i] = new Contact(name, company, detailsURL, smallImageURL, birthdate, Wphone, Hphone, Mphone);
             }
 
             return rtncontact;
         }
-
 
 
         @Override
@@ -152,7 +153,6 @@ public class MainActivityFragment extends Fragment {
                     return null;
                 }
                 contactJsonStr = buffer.toString();
-                Log.v(LOG_TAG, "Contact JSON String: " + contactJsonStr);
             } catch (IOException e) {
                 Log.e("MainActivity Fragment", "Error ", e);
                 return null;
@@ -170,7 +170,8 @@ public class MainActivityFragment extends Fragment {
             }
 
             try {
-                return getContactDataFromJson(contactJsonStr);
+                Contact[] contacts = getContactDataFromJson(contactJsonStr);
+                return contacts;
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 e.printStackTrace();

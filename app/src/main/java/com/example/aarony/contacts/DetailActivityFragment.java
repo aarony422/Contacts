@@ -23,8 +23,11 @@ public class DetailActivityFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
         if (intent != null && intent.hasExtra("Contact")) {
             Contact contact = (Contact)intent.getSerializableExtra("Contact");
-            ((TextView) rootView.findViewById(R.id.detail_name_textview)).setText("Name: " + contact.name);
-            ((TextView) rootView.findViewById(R.id.detail_company_textview)).setText("Company: " + contact.company);
+            ((TextView) rootView.findViewById(R.id.detail_name_textview)).setText(contact.name);
+            ((TextView) rootView.findViewById(R.id.detail_company_textview)).setText(contact.company);
+            ((TextView) rootView.findViewById(R.id.detail_Wphone_textview)).setText(contact.Wphone);
+            ((TextView) rootView.findViewById(R.id.detail_Hphone_textview)).setText(contact.Hphone);
+            ((TextView) rootView.findViewById(R.id.detail_Mphone_textview)).setText(contact.Mphone);
         }
         return rootView;
     }
