@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.List;
  */
 public class MainActivityFragment extends Fragment {
 
-    ArrayAdapter<String> contactAdapter;
+    ContactAdapter contactAdapter;
 
     public MainActivityFragment() {
     }
@@ -48,16 +49,8 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        contactAdapter = new ArrayAdapter<String>(
-                // current context
-                getActivity(),
-                // ID of list item layout
-                R.layout.list_item_contacts,
-                // id of textview to populate
-                R.id.list_item_contacts_textview,
-                // Data
-                new ArrayList<String>()
-        );
+        ArrayList<Contact> contactArr = new ArrayList<Contact>();
+        contactAdapter = new ContactAdapter(getActivity(), contactArr);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -67,9 +60,9 @@ public class MainActivityFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                String contact = contactAdapter.getItem(position);
+                Contact contact = contactAdapter.getItem(position);
                 Intent intent = new Intent(getActivity(), DetailActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, contact);
+                        .putExtra("Contact", (Serializable) contact);
                 startActivity(intent);
             }
         });
@@ -83,32 +76,36 @@ public class MainActivityFragment extends Fragment {
         FCT.execute();
     }
 
-    public class FetchContactsTask extends AsyncTask<String, Void, String[]> {
+    public class FetchContactsTask extends AsyncTask<String, Void, Contact[]> {
         private final String LOG_TAG = FetchContactsTask.class.getSimpleName();
 
         @Override
-        protected void onPostExecute(String[] results) {
+        protected void onPostExecute(Contact[] results) {
             if (results != null) {
                 contactAdapter.clear();
-                for (String contactstr : results) {
-                    contactAdapter.add(contactstr);
+                for (Contact contact : results) {
+                    contactAdapter.add(contact);
                 }
             }
         }
 
-        private String[] getContactDataFromJson(String contactJsonStr) throws JSONException{
+        private Contact[] getContactDataFromJson(String contactJsonStr) throws JSONException{
 
             JSONArray contacts = new JSONArray(contactJsonStr);
-            String[] rtncontact = new String[contacts.length()];
+            Contact[] rtncontact = new Contact[contacts.length()];
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
                 String name = contact.getString("name");
-                String bd = contact.getString("birthdate");
+                String company = contact.getString("company");
+                //String detailsURL = contact.getString("detailsURL");
+                //String smallImageURL = contact.getString("smallImageURL");
+                //String birthdate = contact.getString("birthdate");
 
-                rtncontact[i] = new String(name + "--" + bd);
-            }
-            for (String s: rtncontact) {
-                Log.v(LOG_TAG, "contact entry: " + s);
+                // get phone JSON object
+                //JSONArray phones = contact.getJSONArray("phone");
+                //Log.v(LOG_TAG, phones.toString());
+
+                rtncontact[i] = new Contact(name,company);
             }
 
             return rtncontact;
@@ -117,7 +114,7 @@ public class MainActivityFragment extends Fragment {
 
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected Contact[] doInBackground(String... params) {
             // get JSON data from https://solstice.applauncher.com/external/contacts.json
 
             HttpURLConnection urlConnection = null;

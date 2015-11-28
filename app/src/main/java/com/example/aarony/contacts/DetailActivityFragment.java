@@ -21,9 +21,10 @@ public class DetailActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         Intent intent = getActivity().getIntent();
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
-            String contactStr = intent.getStringExtra(Intent.EXTRA_TEXT);
-                ((TextView) rootView.findViewById(R.id.detail_text)).setText(contactStr);
+        if (intent != null && intent.hasExtra("Contact")) {
+            Contact contact = (Contact)intent.getSerializableExtra("Contact");
+            ((TextView) rootView.findViewById(R.id.detail_name_textview)).setText("Name: " + contact.name);
+            ((TextView) rootView.findViewById(R.id.detail_company_textview)).setText("Company: " + contact.company);
         }
         return rootView;
     }
