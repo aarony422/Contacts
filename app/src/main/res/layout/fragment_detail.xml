@@ -16,7 +16,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/list_item_pic"
+            android:id="@+id/list_item_profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/profilepic"/>

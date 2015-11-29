@@ -3,6 +3,7 @@ package com.example.aarony.contacts;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,16 @@ public class DetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.detail_Wphone_textview)).setText(contact.Wphone);
             ((TextView) rootView.findViewById(R.id.detail_Hphone_textview)).setText(contact.Hphone);
             ((TextView) rootView.findViewById(R.id.detail_Mphone_textview)).setText(contact.Mphone);
+
+            DetailLoader DL = (DetailLoader) new DetailLoader().execute(contact);
+            //Log.v("DETAIL ACTIVITY:", contact.largeImageURL);
+            //if (contact.largeImageURL.equals("")) {
+            ImageLoader IL = (ImageLoader) new ImageLoader().execute(rootView, contact.smallImageURL);
+            //} else {
+            //    ImageLoader IL = (ImageLoader) new ImageLoader().execute(rootView, contact.largeImageURL);
+           // }
+
+
         }
         return rootView;
     }
