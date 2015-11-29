@@ -13,7 +13,15 @@ public class ImageLoader extends AsyncTask<Object, String, Bitmap> {
 
     private View view;
     private Bitmap bitmap = null;
+    public View rootview;
 
+    public ImageLoader(View rootview) {
+        this.rootview = rootview;
+    }
+
+    public ImageLoader() {
+        super();
+    }
 
     @Override
     protected Bitmap doInBackground(Object... params) {
@@ -23,7 +31,7 @@ public class ImageLoader extends AsyncTask<Object, String, Bitmap> {
             InputStream in = new java.net.URL(uri).openStream();
             bitmap = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            Log.e("Error", e.getMessage());
+            //Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
         return bitmap;

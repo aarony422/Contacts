@@ -2,6 +2,7 @@ package com.example.aarony.contacts;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,36 +18,59 @@ import java.net.URL;
 /**
  * Created by aarony on 11/28/15.
  */
-public class DetailLoader extends AsyncTask<Object, Void, Void> {
+public class DetailLoader extends AsyncTask<Void, Void, Void> {
     private final String LOG_TAG = DetailLoader.class.getSimpleName();
-    protected Contact contact = null;
+    public Contact contact = null;
+    public ImageLoader imgnext = null;
+
+
+    public DetailLoader(Contact contact) {
+        this.contact = contact;
+    }
+
+    public void setNext(ImageLoader next) {
+        this.imgnext=next;
+    }
+
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        if (imgnext != null) {
+            imgnext.execute(imgnext.rootview, contact.largeImageURL);
+        }
+        // update detail information
+        ((TextView) imgnext.rootview.findViewById(R.id.detail_email_textview)).setText(contact.email);
+        ((TextView) imgnext.rootview.findViewById(R.id.detail_street_textview)).setText(contact.street);
+        ((TextView) imgnext.rootview.findViewById(R.id.detail_citystate_textview)).setText(contact.city + ", " + contact.state);
+        ((TextView) imgnext.rootview.findViewById(R.id.detail_zipcountry_textview)).setText(contact.zip + ", " + contact.country);
+        ((TextView) imgnext.rootview.findViewById(R.id.detail_website_textview)).setText(contact.website);
+    }
 
     private Void addContactDataFromJson(String contactJsonStr) throws JSONException {
 
-        JSONArray contacts = new JSONArray(contactJsonStr);
-        for (int i = 0; i < contacts.length(); i++) {
-            JSONObject contactObj = contacts.getJSONObject(i);
-            Log.v(LOG_TAG, contactObj.toString());
+        JSONObject contactObj = new JSONObject(contactJsonStr);
+        Log.v(LOG_TAG, contactObj.toString());
 
-            contact.favorite = contactObj.getBoolean("favorite");
-            contact.largeImageURL = contactObj.getString("largeImageURL");
-            contact.email = (contactObj.has("email")) ? contactObj.getString("email") : "";
-            contact.website = (contactObj.has("website")) ? contactObj.getString("website") : "";
+        contact.favorite = contactObj.getBoolean("favorite");
+        contact.largeImageURL = contactObj.getString("largeImageURL");
+        contact.email = (contactObj.has("email")) ? contactObj.getString("email") : "";
+        contact.website = (contactObj.has("website")) ? contactObj.getString("website") : "";
 
-            // get address JSON object
-            JSONObject address = contactObj.getJSONObject("address");
-            contact.street = (address.has("street")) ? address.getString("street") : "";
-            contact.city = (address.has("city")) ? address.getString("city") : "";
-            contact.country = (address.has("country")) ? address.getString("country") : "";
-            contact.zip = (address.has("zip")) ? address.getString("zip") : "";
+        // get address JSON object
+        JSONObject address = contactObj.getJSONObject("address");
+        contact.street = (address.has("street")) ? address.getString("street") : "";
+        contact.city = (address.has("city")) ? address.getString("city") : "";
+        contact.state = (address.has("state")) ? address.getString("state") : "";
+        contact.country = (address.has("country")) ? address.getString("country") : "";
+        contact.zip = (address.has("zip")) ? address.getString("zip") : "";
 
-        }
         return null;
     }
 
 
     @Override
-    protected Void doInBackground(Object... params) {
+    protected Void doInBackground(Void... params) {
         // get JSON data from https://solstice.applauncher.com/external/contacts.json
 
         HttpURLConnection urlConnection = null;
@@ -57,7 +81,6 @@ public class DetailLoader extends AsyncTask<Object, Void, Void> {
 
         try {
             // create the URL for query
-            contact = (Contact) params[0];
             String solURL = contact.detailsURL;
             URL url = new URL(solURL);
 
@@ -103,7 +126,7 @@ public class DetailLoader extends AsyncTask<Object, Void, Void> {
         }
 
         try {
-            addContactDataFromJson(contactJsonStr);
+            return addContactDataFromJson(contactJsonStr);
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();

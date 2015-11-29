@@ -41,6 +41,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        style="@style/ListViewStyle"
                         android:text="Name"/>
 
                 </LinearLayout>
@@ -79,6 +80,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            style="@style/ListViewStyle"
                             android:text="Company"/>
 
                     </LinearLayout>
@@ -124,6 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
                 android:text="Work Phone"/>
 
         </LinearLayout>
@@ -161,6 +164,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
                 android:text="Home Phone"/>
 
         </LinearLayout>
@@ -199,6 +203,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
                 android:text="Mobile Phone"/>
 
         </LinearLayout>
@@ -220,6 +225,131 @@
 
     </LinearLayout>
 
+    <!-- Email -->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
+                android:text="Email"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail_email_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Address -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
+                android:text="Address"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detail_street_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="street"/>
+            <TextView
+                android:id="@+id/detail_citystate_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="city, state"/>
+            <TextView
+                android:id="@+id/detail_zipcountry_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="zipcode, country"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Website -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/ListViewStyle"
+                android:text="Website"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/detail_website_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="website"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

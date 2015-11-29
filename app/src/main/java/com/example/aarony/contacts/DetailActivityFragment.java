@@ -1,6 +1,7 @@
 package com.example.aarony.contacts;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,14 +31,10 @@ public class DetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.detail_Hphone_textview)).setText(contact.Hphone);
             ((TextView) rootView.findViewById(R.id.detail_Mphone_textview)).setText(contact.Mphone);
 
-            DetailLoader DL = (DetailLoader) new DetailLoader().execute(contact);
-            //Log.v("DETAIL ACTIVITY:", contact.largeImageURL);
-            //if (contact.largeImageURL.equals("")) {
-            ImageLoader IL = (ImageLoader) new ImageLoader().execute(rootView, contact.smallImageURL);
-            //} else {
-            //    ImageLoader IL = (ImageLoader) new ImageLoader().execute(rootView, contact.largeImageURL);
-           // }
-
+            DetailLoader DL = (DetailLoader) new DetailLoader(contact);
+            ImageLoader IL = (ImageLoader) new ImageLoader(rootView);
+            DL.setNext(IL);
+            DL.execute();
 
         }
         return rootView;
