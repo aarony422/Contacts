@@ -1,6 +1,7 @@
 package com.example.aarony.contacts;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -32,7 +34,22 @@ public class DetailActivityFragment extends Fragment {
             ((TextView) rootView.findViewById(R.id.detail_Mphone_textview)).setText(contact.Mphone);
 
             DetailLoader DL = (DetailLoader) new DetailLoader(contact);
-            ImageLoader IL = (ImageLoader) new ImageLoader(rootView);
+
+            // check if img is in database
+            // check if image is already in database
+            /*
+            DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+            byte[] byteArr = dbHandler.getImg(contact.employeeID, false);
+
+            if (byteArr == null) {
+                ImageLoader IL = (ImageLoader) new ImageLoader(rootView, getActivity(), contact, true);
+                DL.setNext(IL);
+            } else {
+                ImageView profilepic = (ImageView) rootView.findViewById(R.id.list_item_profile);
+                profilepic.setImageBitmap(BitmapFactory.decodeByteArray(byteArr, 0, byteArr.length));
+            }
+            */
+            ImageLoader IL = (ImageLoader) new ImageLoader(rootView, getActivity(), contact, true);
             DL.setNext(IL);
             DL.execute();
 

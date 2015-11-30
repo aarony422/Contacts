@@ -83,6 +83,7 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(Contact[] results) {
             if (results != null) {
                 contactAdapter.clear();
+                // add to database
                 for (Contact contact : results) {
                     contactAdapter.add(contact);
                 }
@@ -100,6 +101,7 @@ public class MainActivityFragment extends Fragment {
                 String detailsURL = contact.getString("detailsURL");
                 String smallImageURL = contact.getString("smallImageURL");
                 String birthdate = contact.getString("birthdate");
+                int employeeID = contact.getInt("employeeID");
 
                 // get phone JSON object
                 JSONObject phones = contact.getJSONObject("phone");
@@ -107,7 +109,8 @@ public class MainActivityFragment extends Fragment {
                 String Hphone = (phones.has("home")) ? phones.getString("home") : "";
                 String Mphone = (phones.has("mobile")) ? phones.getString("mobile") : "";
 
-                rtncontact[i] = new Contact(name, company, detailsURL, smallImageURL, birthdate, Wphone, Hphone, Mphone);
+                rtncontact[i] = new Contact(name, company, detailsURL, smallImageURL, birthdate, Wphone, Hphone, Mphone, employeeID);
+
             }
 
             return rtncontact;

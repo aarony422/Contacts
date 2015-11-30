@@ -9,6 +9,7 @@ import java.util.HashMap;
 @SuppressWarnings("serial")
 public class Contact implements Serializable{
     public String name;
+    public int employeeID;
     public String company;
     public String detailsURL;
     public String smallImageURL;
@@ -29,7 +30,26 @@ public class Contact implements Serializable{
     public String country;
     public String zip;
 
-    public Contact(String name, String company, String detailsURL, String smallImageURL, String birthdate, String Wphone, String Hphone, String Mphone) {
+    public Contact() {
+        this.name = "";
+        this.company = "";
+        this.detailsURL = "";
+        this.smallImageURL = "";
+        this.birthdate = "";
+        this.Wphone = "";
+        this.Hphone = "";
+        this.Mphone = "";
+        this.employeeID = -1;
+
+        // details variables
+        this.street = "";
+        this.city = "";
+        this.state = "";
+        this.country = "";
+        this.zip = "";
+    }
+
+    public Contact(String name, String company, String detailsURL, String smallImageURL, String birthdate, String Wphone, String Hphone, String Mphone, int employeeID) {
         this.name = name;
         this.company = company;
         this.detailsURL = detailsURL;
@@ -38,6 +58,7 @@ public class Contact implements Serializable{
         this.Wphone = (Wphone != "") ? Wphone : "";
         this.Hphone = (Hphone != "") ? Hphone : "";
         this.Mphone = (Mphone != "") ? Mphone : "";
+        this.employeeID = employeeID;
 
         // details variables
         this.street = "";

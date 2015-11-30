@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,20 @@ public class ContactAdapter extends ArrayAdapter<Contact> {
         // Populate the data into the template view using the data object
         tvName.setText(contact.name);
         tvWphone.setText(contact.Wphone);
-        ImageLoader IL = (ImageLoader) new ImageLoader().execute(convertView, contact.smallImageURL);
+        ImageLoader IL = (ImageLoader) new ImageLoader(convertView, getContext(), contact, false).execute(convertView, contact.smallImageURL);
+
+        /*
+        // check if image is already in database
+        DBHandler dbHandler = new DBHandler(getContext(), null, null, 1);
+        byte[] byteArr = dbHandler.getImg(contact.employeeID, false);
+
+        if (byteArr == null) {
+            ImageLoader IL = (ImageLoader) new ImageLoader(convertView, getContext(), contact, false).execute(convertView, contact.smallImageURL);
+        } else {
+            ImageView profilepic = (ImageView) convertView.findViewById(R.id.list_item_profile);
+            profilepic.setImageBitmap(BitmapFactory.decodeByteArray(byteArr, 0, byteArr.length));
+        }
+        */
 
         // Return the completed view to render on screen
         return convertView;
